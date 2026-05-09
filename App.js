@@ -1,11 +1,12 @@
-import {StyleSheet, ImageBackground, SafeAreaView} from 'react-native';
+import { StyleSheet, ImageBackground } from 'react-native';
+import { useState } from "react";
+import { LinearGradient } from "expo-linear-gradient";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+
 import StartGameScreen from "./screens/StartGameScreen";
 import GameScreen from "./screens/GameScreen";
-
-import {LinearGradient} from "expo-linear-gradient";
-import {useState} from "react";
-import {SafeAreaProvider} from "react-native-safe-area-context";
-
+import Colors from "./constants/colors";
+import {Color} from "react-native/Libraries/Animated/AnimatedExports";
 
 export default function App() {
     const [userNumber, setUserNumber] = useState(null);
@@ -14,23 +15,22 @@ export default function App() {
         setUserNumber(pickedNumber);
     }
 
-    let screen = <StartGameScreen onPickNumber={pickedNumberHandler}/>
+    let screen = <StartGameScreen onPickNumber={pickedNumberHandler} />
 
     if (userNumber) {
-        screen = <GameScreen pickedNumber={userNumber}/>
+        screen = <GameScreen pickedNumber={userNumber} />
     }
 
     return (
         <SafeAreaProvider>
-            <LinearGradient colors={['#3b021f', '#ddb52f']} style={{ flex: 1 }}>
+            <LinearGradient colors={[Colors.primary700, Colors.accent500]} style={styles.container}>
                 <ImageBackground
                     source={require('./assets/background.png')}
                     resizeMode="cover"
-                    style={{ flex: 1 }} // Garante que a imagem ocupe tudo
+                    style={styles.container}
                     imageStyle={styles.backgroundImage}
                 >
-                    {/* Aqui está o pulo do gato: SafeAreaView com flex: 1 */}
-                    <SafeAreaView style={{ flex: 1 }}>
+                    <SafeAreaView style={styles.container}>
                         {screen}
                     </SafeAreaView>
                 </ImageBackground>
